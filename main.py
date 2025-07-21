@@ -38,6 +38,11 @@ def stop_event():
     is_busing = False
     emit('stop', broadcast=True)
 
+@socketio.on('bus_signal')
+def bus_signal(index):
+    print(index)
+    emit('bus_available', index, broadcast=True)
+
 @socketio.on('disconnect')
 def handle_disconnect(reason):
     global conn_count
