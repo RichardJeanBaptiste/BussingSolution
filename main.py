@@ -18,10 +18,15 @@ def handle_connect():
     print('Client connected:')
     conn_count += 1
 
-    emit('CResponse', {'data': 'Connected!', 'count': conn_count})
+    emit('CResponse', {'data': 'Connected!'})
 
     if is_busing:
         emit('start')
+
+@socketio.on('test_signal')
+def test_signal():
+    print("Signal Recieved")
+    emit('test_response', {'data': 'Response received'})
     
     
 @socketio.on('start_signal')
@@ -38,10 +43,10 @@ def stop_event():
     is_busing = False
     emit('stop', broadcast=True)
 
-@socketio.on('bus_signal')
-def bus_signal(index):
-    print(index)
-    emit('bus_available', index, broadcast=True)
+@socketio.on('bus_ready')
+def bus_ready(bus_name):
+    print(f'{bus_name} is onsite')
+    emit('bus_available', bus_name, broadcast=True)
 
 @socketio.on('disconnect')
 def handle_disconnect(reason):
