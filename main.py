@@ -45,14 +45,19 @@ def stop_event():
 
 @socketio.on('bus_ready')
 def bus_ready(bus_name):
-    print(f'{bus_name} is onsite')
+    print(f'{bus_name} is ready')
     emit('bus_available', bus_name, broadcast=True)
+
+@socketio.on('bus_return')
+def bus_return(bus_name):
+    print(f'{bus_name} is not ready')
+    emit('bus_unavailable', bus_name, broadcast=True)
 
 @socketio.on('disconnect')
 def handle_disconnect(reason):
     global conn_count
     conn_count -= 1
-    print(f'Client disconnected: remaining connections : {conn_count}')
+    print(f'Client disconnected: remaining connections : {conn_count} : reason : {reason}')
 
 @socketio.on_error()
 def error_handler(e):
