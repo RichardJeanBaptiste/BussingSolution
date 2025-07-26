@@ -1,7 +1,9 @@
 from flask import Flask, render_template
+from login.routes import login_bp
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
 
 app = Flask(__name__)
+app.register_blueprint(login_bp)
 app.config['SECRET_KEY'] = 'your_secret'
 socketio = SocketIO(app, cors_allowed_origins="*")
 

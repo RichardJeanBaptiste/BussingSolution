@@ -96,7 +96,6 @@ function App() {
     } else {
       socket.emit('bus_ready', name);
     }
-    
   }
 
   /**
@@ -138,7 +137,6 @@ function App() {
     <>
       <Box>
         <Typography variant='h3' component="h3">Bussing Solutions</Typography>
-        <Button onClick={() => checkIfAvailable('Bus1')}>Test Button</Button>
         <Stack direction='row' spacing={2}>
           <Button variant='contained' onClick={startBussing} color={isBussing ? 'success' : 'primary'}>Start</Button>               
           <Button variant='contained' onClick={stopBussing}>Stop</Button>
