@@ -1,19 +1,20 @@
 from flask import Flask, render_template
 from flask_login import LoginManager
+from flask_cors import CORS, cross_origin
 from login.routes import load_user, login_bp
 from flask_socketio import SocketIO, emit, send, join_room, leave_room
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret'
+CORS(app)
 app.register_blueprint(login_bp)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.user_loader(load_user)
 
 socketio = SocketIO(app, cors_allowed_origins="*")
-
-login_manager.user_loader(load_user)
 
 conn_count = 0
 is_busing = False

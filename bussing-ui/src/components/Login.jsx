@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -42,17 +43,42 @@ function Login() {
                 height: '100%'
             }
         }
+    }
 
+    const [loginForm, setLoginForm] = useState({username: '', password: ''});
+
+    const editLoginForm = (e) => {
+        const { name, value } = e.target;
+        
+        setLoginForm((prevForm) => ({
+            ...prevForm,
+            [name]: value,
+        }));
+    }
+
+    const SubmitForm = async () => {
+        
+        await fetch("http://localhost:5000/login/",{
+            method: 'POST',
+            body: JSON.stringify(loginForm),
+        }).then((response) => {
+            return response;
+        }).then((data) => {
+            console.log(data);
+        })
     }
 
     return (
-        <Box sx={Styles.root}>
+       <Box sx={Styles.root}>
             <Typography align='center'>Login Page</Typography>
             <Box sx={Styles.login}>
                 <TextField 
-                    margin='dense' 
+                    margin='dense'
+                    name="username"
+                    value={loginForm.username} 
                     type='email' 
-                    label='Email' 
+                    label='Email'
+                    onChange={editLoginForm} 
                     sx={[Styles.loginForm, {marginTop: '30%'}]}
                     slotProps={{
                         input: {
@@ -62,8 +88,11 @@ function Login() {
                 />
                 <TextField 
                     margin='dense' 
-                    type='password' 
-                    label='Password' 
+                    type='password'
+                    name='password' 
+                    label='Password'
+                    value={loginForm.password}
+                    onChange={editLoginForm} 
                     sx={Styles.loginForm}
                     slotProps={{
                         input: {
@@ -75,7 +104,7 @@ function Login() {
                 <Button variant='text'>Forgot Password?</Button>
 
                 <Box>
-                    <Button>Login</Button>    
+                    <Button onClick={SubmitForm}>Login</Button>    
                 </Box>
             </Box>
         </Box>
@@ -83,3 +112,9 @@ function Login() {
 }
 
 export default Login
+
+
+/**
+ * 
+ * 
+ */

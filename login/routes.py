@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, redirect, render_template_string, request, url_for
-from flask_login import UserMixin, login_user, login_required, current_user
+from flask_cors import cross_origin
+from flask_login import UserMixin, login_user, login_required, logout_user, current_user
 from . import login_bp
 
-#login_bp = Blueprint('login', __name__, url_prefix='/login')
 
 users = {
     'admin': {'password': 'secret'},
@@ -21,7 +21,8 @@ def load_user(user_id):
     return None
 
 
-@login_bp.route('/', methods=['GET', 'POST'])
+@login_bp.route('/', methods=['POST'])
+@cross_origin()
 def login():
     if request.method == 'POST':
         username = request.form.get("username")
@@ -29,11 +30,12 @@ def login():
         user = users.get(username)
         if user and user['password'] == password:
             login_user(User(username))
-            return redirect(url_for("login.dashboard"))
+            return "Login Successful"
+            #return redirect(url_for("login.dashboard"))
         return "Invalid credentials", 401
 
     return render_template_string("""
-        <form method="post">
+        <form method="post" style="display:flex; flex-direction: column; width: 200px;">
             <input name="username" placeholder="Username">
             <input name="password" type="password" placeholder="Password">
             <button type="submit">Login</button>
@@ -44,3 +46,8 @@ def login():
 @login_required
 def dashboard():
     return f"Welcome, {current_user.id}! <a href='/logout'>Logout</a>"
+
+@login_bp.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("login.login"))
