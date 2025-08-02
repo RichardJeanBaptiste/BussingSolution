@@ -57,16 +57,20 @@ function Login() {
     }
 
     const SubmitForm = async () => {
-        
-        await fetch("http://localhost:5000/login/",{
-            method: 'POST',
-            body: JSON.stringify(loginForm),
-        }).then((response) => {
-            return response;
-        }).then((data) => {
-            console.log(data);
-        })
-    }
+      
+       await fetch("http://localhost:5000/login",{
+           method: 'POST',
+           body: JSON.stringify(loginForm),
+           headers: {
+               'Content-type': 'application/json'
+           }
+       })
+       .then((response) => response.json())
+       .then((data) => {
+           console.log(data);
+       })
+   }
+
 
     return (
        <Box sx={Styles.root}>

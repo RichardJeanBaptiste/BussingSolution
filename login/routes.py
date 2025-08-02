@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, render_template_string, request, url_for
+from flask import jsonify, redirect, render_template_string, request, url_for
 from flask_cors import cross_origin
 from flask_login import UserMixin, login_user, login_required, logout_user, current_user
 from . import login_bp
@@ -41,6 +41,20 @@ def login():
             <button type="submit">Login</button>
         </form>
     """)
+
+@login_bp.route('/login', methods=['POST'])
+def posst_login():
+
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+    user = users.get(username)
+    if user and user['password'] == password:
+        login_user(User(username))
+        return jsonify(message="Login Successful", status=200), 200
+        #return redirect(url_for("login.dashboard"))
+    return "Invalid credentials", 401
+
 
 @login_bp.route('/dashboard')
 @login_required
