@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -45,6 +46,8 @@ function Login() {
         }
     }
 
+    let navigate = useNavigate();
+
     const [loginForm, setLoginForm] = useState({username: '', password: ''});
 
     const editLoginForm = (e) => {
@@ -67,7 +70,13 @@ function Login() {
        })
        .then((response) => response.json())
        .then((data) => {
-           console.log(data);
+            console.log(data);
+
+            if(data.status == 200){
+                navigate("/dashboard")
+            } else {
+                alert("Login Unsuccessful")
+            }   
        })
    }
 
