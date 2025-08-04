@@ -10,6 +10,16 @@ import EmailIcon from '@mui/icons-material/Email';
 import HttpsIcon from '@mui/icons-material/Https';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
+/**
+ * Breakpoint	Screen width
+  xs	0px+
+  sm	600px+
+  md	900px+
+  lg	1200px+
+  xl	1536px+
+ */
+
+
 function Login() {
 
     const Styles = {
@@ -23,8 +33,14 @@ function Login() {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '60%',
-            height: '60%',
+            width: {
+                xs: '60%',
+                sm: '30%',
+            },
+            height: {
+                xs: '85%',
+                sm: '85%'
+            },
             borderRadius: '20px',
             borderColor: 'black',
             borderStyle: 'solid',
@@ -37,12 +53,24 @@ function Login() {
         loginForm: {
             marginTop: '2%',
             marginLeft: '7%',
-            width: '85%',
-            height: '13%',
+            width: {
+                xs: '83%',
+                sm:'85%'
+            },
+            height: {
+                xs: '7%',
+                sm:'13%'
+            },
             "& div": {
                 borderRadius: '45px',
-                height: '100%'
+                height: '100%',
+            },
+            "& input": {
+                fontSize: '12px'
             }
+        },
+        loginIcon: {
+            fontSize: '14px'
         }
     }
 
@@ -95,7 +123,7 @@ function Login() {
                     sx={[Styles.loginForm, {marginTop: '30%'}]}
                     slotProps={{
                         input: {
-                            startAdornment: <InputAdornment position='start'><EmailIcon/></InputAdornment>
+                            startAdornment: <InputAdornment position='start'><EmailIcon sx={Styles.loginIcon}/></InputAdornment>
                         }
                     }}
                 />
@@ -109,8 +137,8 @@ function Login() {
                     sx={Styles.loginForm}
                     slotProps={{
                         input: {
-                            startAdornment: <InputAdornment position='start'><HttpsIcon/></InputAdornment>,
-                            endAdornment: <InputAdornment position='end'> <IconButton aria-label='Hide Password'><VisibilityOffIcon/></IconButton></InputAdornment>
+                            startAdornment: <InputAdornment position='start'><HttpsIcon sx={Styles.loginIcon}/></InputAdornment>,
+                            endAdornment: <InputAdornment position='end'> <IconButton aria-label='Hide Password'><VisibilityOffIcon sx={Styles.loginIcon}/></IconButton></InputAdornment>
                         }
                     }}
                 />
