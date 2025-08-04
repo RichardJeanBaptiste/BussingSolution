@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import HttpsIcon from '@mui/icons-material/Https';
@@ -38,7 +37,7 @@ function Login() {
                 sm: '30%',
             },
             height: {
-                xs: '85%',
+                xs: '50%',
                 sm: '85%'
             },
             borderRadius: '20px',
@@ -55,11 +54,13 @@ function Login() {
             marginLeft: '7%',
             width: {
                 xs: '83%',
-                sm:'85%'
+                sm:'85%',
+                md: '87%'
             },
             height: {
-                xs: '7%',
-                sm:'13%'
+                xs: '10%',
+                sm:'10%',
+                md: '7%'
             },
             "& div": {
                 borderRadius: '45px',
@@ -70,7 +71,51 @@ function Login() {
             }
         },
         loginIcon: {
-            fontSize: '14px'
+            xs: {
+                fontSize: '14px'
+            },
+            sm: {
+                fontSize: '18px'
+            }
+        },
+        loginBtns : {
+            position: 'relative',
+            width: '100%',
+            height: '20%'
+        },
+        Btns1: {
+            position: 'absolute',
+            top: {
+                xs: '5%',
+                sm: '5%',
+            },
+            left: {
+                xs: '0%',
+                sm: '0%',
+                md: '4%'
+            },
+            fontSize: {
+                xs: '8px',
+                sm: '8px',
+                md: '10px'
+            }
+        }, 
+        Btns2: {
+            position: 'absolute',
+            top: {
+                xs: '5%',
+                sm: '5%',
+            },
+            right: {
+                xs: '5%',
+                sm: '5%',
+                md: '7%'
+            },
+            fontSize: {
+                xs: '8px',
+                sm: '8px',
+                md: '10px'
+            },            
         }
     }
 
@@ -88,6 +133,11 @@ function Login() {
     }
 
     const SubmitForm = async () => {
+
+        if(loginForm.username == "" || loginForm.password == ""){
+            alert('Username or Password required')
+            return
+        }
       
        await fetch("http://localhost:5000/login",{
            method: 'POST',
@@ -111,7 +161,6 @@ function Login() {
 
     return (
        <Box sx={Styles.root}>
-            <Typography align='center'>Login Page</Typography>
             <Box sx={Styles.login}>
                 <TextField 
                     margin='dense'
@@ -142,10 +191,9 @@ function Login() {
                         }
                     }}
                 />
-                <Button variant='text'>Forgot Password?</Button>
-
-                <Box>
-                    <Button onClick={SubmitForm}>Login</Button>    
+                <Box sx={Styles.loginBtns}>
+                    <Button onClick={SubmitForm} sx={Styles.Btns1}>Login</Button>  
+                    <Button variant='text' color='error' sx={Styles.Btns2}>Forgot?</Button>
                 </Box>
             </Box>
         </Box>
