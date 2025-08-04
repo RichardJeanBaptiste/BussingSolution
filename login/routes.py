@@ -53,7 +53,7 @@ def posst_login():
         login_user(User(username))
         return jsonify(message="Login Successful", status=200), 200
         #return redirect(url_for("login.dashboard"))
-    return "Invalid credentials", 401
+    return jsonify(message="Invalid credentials", status = 401), 401
 
 
 @login_bp.route('/dashboard')
